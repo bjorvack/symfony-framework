@@ -40,12 +40,16 @@ class User
      */
     private $roles = [];
 
-    public function __construct(UuidInterface $uuid, string $email, string $password, array $roles)
+    public function __construct(UuidInterface $uuid, string $email, string $password, ?array $roles)
     {
         $this->uuid = $uuid;
         $this->email = $email;
         $this->password = $password;
         $this->roles = $roles;
+
+        if (empty($roles)) {
+            $this->roles = ['ROLE_USER'];
+        }
     }
 
     public function getUuid(): ?UuidInterface

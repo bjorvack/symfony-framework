@@ -1,0 +1,5 @@
+user:
+  password:
+    minLength: Your password should be at least 8 characters long
+  roles:
+    minCount: A user should have at least 1 role
