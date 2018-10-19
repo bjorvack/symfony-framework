@@ -7,8 +7,10 @@ use App\Repository\UserRepository as UserRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Ramsey\Uuid\UuidInterface;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
-class UserRepository extends ServiceEntityRepository implements UserRepositoryInterface
+class UserRepository extends ServiceEntityRepository implements UserRepositoryInterface, UserLoaderInterface
 {
     public function __construct(RegistryInterface $registry)
     {
@@ -29,5 +31,10 @@ class UserRepository extends ServiceEntityRepository implements UserRepositoryIn
     {
         $this->getEntityManager()->persist($user);
         $this->getEntityManager()->flush($user);
+    }
+
+    public function loadUserByUsername($username): ?User
+    {
+        return $this->findOneBy(['email' => $username]);
     }
 }

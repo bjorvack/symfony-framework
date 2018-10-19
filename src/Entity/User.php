@@ -4,11 +4,13 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\UuidInterface;
+use Serializable;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\Doctrine\UserRepository")
  */
-class User
+class User implements UserInterface, Serializable
 {
     /**
      * @var UuidInterface
@@ -57,18 +59,52 @@ class User
         return $this->uuid;
     }
 
-    public function getEmail(): ?string
+    public function getEmail(): string
     {
         return $this->email;
     }
 
-    public function getPassword(): ?string
+    public function getPassword(): string
     {
         return $this->password;
     }
 
-    public function getRoles(): ?array
+    public function getRoles(): array
     {
         return $this->roles;
+    }
+
+    public function getSalt(): ?string
+    {
+        return null;
+    }
+
+    public function getUsername(): string
+    {
+        return $this->getEmail();
+    }
+
+    public function eraseCredentials()
+    {
+    }
+
+    public function serialize()
+    {
+        return serialize(array(
+            $this->uuid,
+            $this->email,
+            $this->password,
+            $this->roles
+        ));
+    }
+
+    public function unserialize($serialized)
+    {
+        list (
+            $this->uuid,
+            $this->email,
+            $this->password,
+            $this->roles
+            ) = unserialize($serialized);
     }
 }

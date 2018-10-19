@@ -12,6 +12,7 @@
         "symfony/framework-bundle": "*",
         "symfony/orm-pack": "^1.0",
         "symfony/security-bundle": "*",
+        "symfony/security-csrf": "*",
         "symfony/validator": "*",
         "symfony/yaml": "*"
     },
@@ -19,7 +20,8 @@
         "symfony/dotenv": "*",
         "symfony/maker-bundle": "^1.7",
         "symfony/phpunit-bridge": "*",
-        "symfony/profiler-pack": "^1.0"
+        "symfony/profiler-pack": "^1.0",
+        "symfony/web-server-bundle": "*"
     },
     "config": {
         "preferred-install": {
