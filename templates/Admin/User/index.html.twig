@@ -1,0 +1,27 @@
+{% extends 'Admin/admin.html.twig' %}
+
+{% block title %}
+    {{ parent() }} -
+    {{ 'title.admin_users'|trans }}
+{% endblock %}
+
+{% block body %}
+ <table>
+     <thead>
+        <tr>
+            <th>{{ 'table.email'|trans }}</th>
+            <th>{{ 'table.actions'|trans }}</th>
+        </tr>
+     </thead>
+     <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.email }}</td>
+                <td>
+                    @TODO
+                </td>
+            </tr>
+        {% endfor %}
+     </tbody>
+ </table>
+{% endblock %}

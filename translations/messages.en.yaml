@@ -1,2 +1,7 @@
 title:
   login: 'Login'
+  admin: 'Admin'
+  admin_users: 'Users'
+table:
+  email: 'E-mail'
+  actions: 'Actions'
