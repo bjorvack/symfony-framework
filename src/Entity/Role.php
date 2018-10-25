@@ -35,8 +35,8 @@ class Role
      * @ORM\ManyToMany(targetEntity="App\Entity\Role")
      * @ORM\JoinTable(
      *     name="role_hierarchy",
-     *     joinColumns={@ORM\JoinColumn(name="parent_uuid", referencedColumnName="uuid")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="child_uuid", referencedColumnName="uuid")}
+     *     joinColumns={@ORM\JoinColumn(name="parent_uuid", referencedColumnName="uuid", onDelete="CASCADE")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="child_uuid", referencedColumnName="uuid", onDelete="CASCADE")}
      * )
      */
     private $hierarchy;
