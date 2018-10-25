@@ -2,6 +2,7 @@
 
 namespace App\Command;
 
+use Doctrine\Common\Collections\Collection;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -34,7 +35,7 @@ final class CreateUser
     public $plainPassword;
 
     /**
-     * @var array
+     * @var Collection
      *
      * @Assert\Count(
      *     min="1",
@@ -43,7 +44,7 @@ final class CreateUser
      */
     public $roles;
 
-    public function __construct(string $email, string $plainPassword, array $roles = [])
+    public function __construct(string $email, string $plainPassword, Collection $roles)
     {
         $this->uuid = Uuid::uuid4();
         $this->email = $email;

@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\UuidInterface;
 use Serializable;
@@ -36,22 +37,23 @@ class User implements UserInterface, Serializable
     private $password;
 
     /**
-     * @var array
+     * @var Collection
      *
-     * @ORM\Column(type="simple_array")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Role")
+     * @ORM\JoinTable(
+     *     name="user_roles",
+     *     joinColumns={@ORM\JoinColumn(name="user_uuid", referencedColumnName="uuid")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="role_uuid", referencedColumnName="uuid")}
+     * )
      */
-    private $roles = [];
+    private $roles;
 
-    public function __construct(UuidInterface $uuid, string $email, string $password, ?array $roles)
+    public function __construct(UuidInterface $uuid, string $email, string $password, Collection $roles)
     {
         $this->uuid = $uuid;
         $this->email = $email;
         $this->password = $password;
         $this->roles = $roles;
-
-        if (empty($roles)) {
-            $this->roles = ['ROLE_USER'];
-        }
     }
 
     public function getUuid(): ?UuidInterface
@@ -69,7 +71,7 @@ class User implements UserInterface, Serializable
         return $this->password;
     }
 
-    public function getRoles(): array
+    public function getRoles(): Collection
     {
         return $this->roles;
     }

@@ -4,6 +4,8 @@ namespace App\Console;
 
 use App\Command\CreateUser;
 use App\CommandHandler\CreateUserHandler;
+use App\Repository\RoleRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -16,11 +18,17 @@ class CreateUserCommand extends Command
     /** @var CreateUserHandler */
     private $createUserHandler;
 
-    public function __construct(CreateUserHandler $createUserHandler)
-    {
+    /** @var RoleRepository */
+    private $roleRepository;
+
+    public function __construct(
+        CreateUserHandler $createUserHandler,
+        RoleRepository $roleRepository
+    ) {
         parent::__construct(null);
 
         $this->createUserHandler = $createUserHandler;
+        $this->roleRepository = $roleRepository;
     }
 
     protected function configure()
@@ -37,7 +45,10 @@ class CreateUserCommand extends Command
         $this->createUserHandler->handle(
             new CreateUser(
                 $input->getArgument('email'),
-                $input->getArgument('password')
+                $input->getArgument('password'),
+                new ArrayCollection([
+                    $this->roleRepository->findOneByName('ROLE_USER')
+                ])
             )
         );
 

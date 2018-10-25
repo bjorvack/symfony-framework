@@ -19,4 +19,13 @@ class RoleRepository extends ServiceEntityRepository implements RoleRepositoryIn
         $this->getEntityManager()->persist($role);
         $this->getEntityManager()->flush($role);
     }
+
+    public function findOneByName(string $name): Role
+    {
+        return $this->createQueryBuilder('r')
+            ->where('r.name = :name')
+            ->setParameter('name', $name)
+            ->getQuery()
+            ->getSingleResult();
+    }
 }
