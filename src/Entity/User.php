@@ -39,11 +39,11 @@ class User implements UserInterface, Serializable
     /**
      * @var Collection
      *
-     * @ORM\ManyToMany(targetEntity="App\Entity\Role")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Role", orphanRemoval=true)
      * @ORM\JoinTable(
      *     name="user_roles",
-     *     joinColumns={@ORM\JoinColumn(name="user_uuid", referencedColumnName="uuid")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="role_uuid", referencedColumnName="uuid")}
+     *     joinColumns={@ORM\JoinColumn(name="user_uuid", referencedColumnName="uuid", onDelete="CASCADE")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="role_uuid", referencedColumnName="uuid", onDelete="CASCADE")}
      * )
      */
     private $roles;
